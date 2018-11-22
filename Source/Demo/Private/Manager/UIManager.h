@@ -14,10 +14,13 @@
 UENUM(BlueprintType)
 enum class EUIHierarchy : uint8
 {
+	//基础
 	Basic = 10,
 
+	//对话框
 	Dialog = 20,
 
+	//公告
 	Notice = 30
 };
 
@@ -49,14 +52,18 @@ struct FUITableRow : public FTableRowBase
 	}
 public:
 
+	//名字
 	FName Name;
 
+	//描述
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FText Describe;
 
+	//控件
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TSoftClassPtr<UUIWidget> UIWidget;
 
+	//层级
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		EUIHierarchy UIHierarchy;
 };
@@ -79,9 +86,11 @@ private:
 	void LoadTable();
 public:
 
+	//打开UI
 	UFUNCTION(BlueprintCallable)
 		void OpenUI(FName Name, FString Param);
 
+	//关闭UI
 	UFUNCTION(BlueprintCallable)
 		void CloseUI(FName Name);
 
