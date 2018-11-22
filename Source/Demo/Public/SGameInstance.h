@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 class UUIManager;
 
 /**
- * ÓÎÏ·µ¥Àı
+ * æ¸¸æˆå•ä¾‹
  */
 UCLASS()
 class DEMO_API USGameInstance : public UGameInstance

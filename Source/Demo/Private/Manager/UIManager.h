@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -80,11 +80,16 @@ private:
 public:
 
 	UFUNCTION(BlueprintCallable)
-		void OpenUI(FName Name);
+		void OpenUI(FName Name, FString Param);
 
 	UFUNCTION(BlueprintCallable)
 		void CloseUI(FName Name);
 
 private:
+
+	//UI表
 	UDataTable *UITable;
+
+	//存在的UI
+	TMap<FName, UUIWidget> UIMap;
 };
