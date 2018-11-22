@@ -6,6 +6,22 @@
 #include "Blueprint/UserWidget.h"
 #include "UIWidget.generated.h"
 
+UENUM()
+enum class EUIStatus : uint8
+{
+    //创建
+    Create,
+    
+    //打开
+    Open,
+    
+    //关闭
+    Close,
+    
+    //销毁
+    Destory
+};
+
 /**
  * UI管理
  */
@@ -32,5 +48,5 @@ public:
 	UFUNCTION(BlueprintPure)
 	bool IsOpen();
 private:
-	bool bIsOpen;
+	EUIStatus EUIStatus;
 };
