@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
-#include "DemoGameModeBase.generated.h"
+#include "Blueprint/UserWidget.h"
+#include "UIWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DEMO_API ADemoGameModeBase : public AGameModeBase
+class UUIWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	

@@ -6,8 +6,10 @@
 #include "Engine/GameInstance.h"
 #include "SGameInstance.generated.h"
 
+class UUIManager;
+
 /**
- * 
+ * ÓÎÏ·µ¥Àý
  */
 UCLASS()
 class DEMO_API USGameInstance : public UGameInstance
@@ -20,7 +22,10 @@ public:
 
 	/** virtual function to allow custom GameInstances an opportunity to do cleanup when shutting down */
 	virtual void Shutdown();
+
 public:
-	UPROPERTY(BlueprintReadOnly)
-	class UUIManager* UIManager;
+	UFUNCTION(BlueprintPure)
+	UUIManager* GetUIManager();
+private:
+	UUIManager* UIManager;
 };

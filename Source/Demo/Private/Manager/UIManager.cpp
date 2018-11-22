@@ -2,24 +2,41 @@
 
 #include "UIManager.h"
 
-	/** virtual function to allow custom GameInstances an opportunity to set up what it needs */
 void UUIManager::Init()
 {
 	Super::Init();
+
+	LoadTable();
 }
 
-/** virtual function to allow custom GameInstances an opportunity to do cleanup when shutting down */
+void UUIManager::LoadTable()
+{
+	FString path = TEXT("/Game/Resources/Tables/UITable.UITable");
+	UITable = LoadObject<UDataTable>(this, *path, NULL, LOAD_None, NULL);
+	UITable->AddToRoot();
+}
+
 void UUIManager::Shutdown()
 {
 	Super::Shutdown();
+
+	UITable->RemoveFromRoot();
+	UITable = nullptr;
 }
 
-void UUIManager::OpenDialog(FName Name)
+void UUIManager::OpenUI(FName Name)
 {
-	UE_LOG(LogTemp, Log, TEXT("UUIManager::OpenDialog"));
+	FString ContextString;
+	FUITableRow *UIInfo = UITable->FindRow<FUITableRow>(Name, ContextString);
+	if (UIInfo)
+	{
+		FText *Desc = &UIInfo->Describe;
+		FName *UIName = &UIInfo->Name;
+		UE_LOG(LogTemp, Log, TEXT("UUIManager::OpenUI->%s->%s"), UIName, Desc);
+	}
 }
 
-void UUIManager::CloseDialog(FName Name)
+void UUIManager::CloseUI(FName Name)
 {
-	UE_LOG(LogTemp, Log, TEXT("UUIManager::CloseDialog"));
+	UE_LOG(LogTemp, Log, TEXT("UUIManager::CloseUI->%s"), &Name);
 }

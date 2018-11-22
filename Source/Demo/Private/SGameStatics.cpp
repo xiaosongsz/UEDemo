@@ -11,5 +11,5 @@ USGameInstance* USGameStatics::GetSGameInstance(const UObject* WorldContextObjec
 
 UUIManager* USGameStatics::GetUIManager(const UObject* WorldContextObject)
 {
-	return USGameStatics::GetSGameInstance(WorldContextObject)->UIManager;
+	return USGameStatics::GetSGameInstance(WorldContextObject)->GetUIManager();
 }

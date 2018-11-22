@@ -27,3 +27,8 @@ void USGameInstance::Shutdown()
 		UIManager = nullptr;
 	}
 }
+
+UUIManager* USGameInstance::GetUIManager()
+{
+	return UIManager;
+}
