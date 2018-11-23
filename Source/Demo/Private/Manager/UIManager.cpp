@@ -33,8 +33,7 @@ void UUIManager::OpenUI(FName Name, FString Param)
 
 		if (!Widget)
 		{
-			TSoftClassPtr<UUIWidget> *UIWidget = &UIInfo->UIWidget;
-			Widget = CreateWidget<UUIWidget>(UGameplayStatics::GetPlayerController(GetWorld(), 0), UIWidget->LoadSynchronous());
+			Widget = CreateWidget<UUIWidget>(UGameplayStatics::GetPlayerController(GetWorld(), 0), UIInfo->UIWidget.LoadSynchronous());
 
 			if (Widget)
 			{
