@@ -100,5 +100,5 @@ private:
 	UDataTable *UITable;
 
 	//存在的UI
-	TMap<FName, UUIWidget> UIMap;
+	TMap<FName, UUIWidget*> UIMap;
 };

@@ -29,7 +29,7 @@ void UUIManager::OpenUI(FName Name, FString Param)
 	FUITableRow *UIInfo = UITable->FindRow<FUITableRow>(Name, ContextString);
 	if (UIInfo)
 	{
-		UUIWidget *Widget = UIMap.Find(Name);
+		UUIWidget *Widget = *UIMap.Find(Name);
 
 		if (!Widget)
 		{
@@ -37,6 +37,7 @@ void UUIManager::OpenUI(FName Name, FString Param)
 
 			if (Widget)
 			{
+				UIMap.Add(Name, Widget);
 				Widget->AddToViewport((int32)UIInfo->UIHierarchy);
 			}
 		}
@@ -52,7 +53,7 @@ void UUIManager::OpenUI(FName Name, FString Param)
 
 void UUIManager::CloseUI(FName Name)
 {
-	UUIWidget *Widget = UIMap.Find(Name);
+	UUIWidget *Widget = *UIMap.Find(Name);
 
 	if (Widget->IsOpen())
 	{
