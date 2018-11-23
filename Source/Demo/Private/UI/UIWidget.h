@@ -6,7 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "UIWidget.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EUIStatus : uint8
 {
     //创建
@@ -14,6 +14,9 @@ enum class EUIStatus : uint8
     
     //打开
     Open,
+
+	//隐藏
+	Hide,
     
     //关闭
     Close,
@@ -48,5 +51,5 @@ public:
 	UFUNCTION(BlueprintPure)
 	bool IsOpen();
 private:
-	EUIStatus EUIStatus;
+	EUIStatus EStatus;
 };

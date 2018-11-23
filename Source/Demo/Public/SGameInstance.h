@@ -11,7 +11,7 @@ class UUIManager;
 /**
  * 游戏单例
  */
-UCLASS()
+UCLASS(config = Game, transient, BlueprintType, Blueprintable)
 class DEMO_API USGameInstance : public UGameInstance
 {
 	GENERATED_BODY()

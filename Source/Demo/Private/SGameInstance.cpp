@@ -9,7 +9,7 @@ void USGameInstance::Init()
 {
 	Super::Init();
 
-	UIManager = NewObject<UUIManager>();
+	UIManager = NewObject<UUIManager>(this);
 	if (UIManager)
 	{
 		UIManager->Init();

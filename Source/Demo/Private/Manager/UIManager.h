@@ -15,13 +15,13 @@ UENUM(BlueprintType)
 enum class EUIHierarchy : uint8
 {
 	//基础
-	Basic = 10,
+	Basic,
 
 	//对话框
-	Dialog = 20,
+	Dialog,
 
 	//公告
-	Notice = 30
+	Notice
 };
 
 /**
@@ -62,7 +62,7 @@ public:
 	//控件
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TSoftClassPtr<UUIWidget> UIWidget;
-
+	
 	//层级
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		EUIHierarchy UIHierarchy;

@@ -6,17 +6,17 @@ void UUIWidget::OnOpen(const FString &Param)
 {
 	ReceiveOpen(Param);
 
-    EUIStatus = EUIStatus::Open;
+	EStatus = EUIStatus::Open;
 }
 
 void UUIWidget::OnClose()
 {
 	ReceiveClose();
 
-	EUIStatus = EUIStatus::Close;
+	EStatus = EUIStatus::Close;
 }
 
 bool UUIWidget::IsOpen()
 {
-    return EUIStatus == EUIStatus::Open;
+    return EStatus == EUIStatus::Open;
 }
