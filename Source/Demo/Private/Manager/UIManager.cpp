@@ -29,7 +29,8 @@ void UUIManager::OpenUI(FName Name, FString Param)
 	FUITableRow *UIInfo = UITable->FindRow<FUITableRow>(Name, ContextString);
 	if (UIInfo)
 	{
-		UUIWidget *Widget = *UIMap.Find(Name);
+        UUIWidget **WidgetPtr = UIMap.Find(Name);
+        UUIWidget *Widget = WidgetPtr ? *WidgetPtr : nullptr;
 
 		if (!Widget)
 		{
@@ -53,7 +54,8 @@ void UUIManager::OpenUI(FName Name, FString Param)
 
 void UUIManager::CloseUI(FName Name)
 {
-	UUIWidget *Widget = *UIMap.Find(Name);
+    UUIWidget **WidgetPtr = UIMap.Find(Name);
+    UUIWidget *Widget = WidgetPtr ? *WidgetPtr : nullptr;
 
 	if (Widget->IsOpen())
 	{
