@@ -6,6 +6,9 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "SGameStatics.generated.h"
 
+class USGameInstance;
+class USUIManager;
+
 /**
  * 游戏静态方法
  */
@@ -17,9 +20,9 @@ public:
     
     //获取游戏单例
 	UFUNCTION(BlueprintPure, Category = "SGame", meta = (WorldContext = "WorldContextObject"))
-		static class USGameInstance* GetSGameInstance(const UObject* WorldContextObject);
+		static USGameInstance* GetSGameInstance(const UObject* WorldContextObject);
 
     //获取UI管理
 	UFUNCTION(BlueprintPure, Category = "SGame", meta = (WorldContext = "WorldContextObject"))
-		static class UUIManager* GetUIManager(const UObject* WorldContextObject);
+		static USUIManager* GetUIManager(const UObject* WorldContextObject);
 };

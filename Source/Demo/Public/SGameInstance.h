@@ -6,7 +6,7 @@
 #include "Engine/GameInstance.h"
 #include "SGameInstance.generated.h"
 
-class UUIManager;
+class USUIManager;
 
 /**
  * 游戏单例
@@ -27,7 +27,7 @@ public:
     
     //获取UI管理
 	UFUNCTION(BlueprintPure)
-	UUIManager* GetUIManager();
+	USUIManager* GetUIManager();
 private:
-	UUIManager* UIManager;
+	USUIManager* UIManager;
 };

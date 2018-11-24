@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SGameInstance.h"
-#include "Manager/UIManager.h"
+#include "Manager/SUIManager.h"
 
 
 /** virtual function to allow custom GameInstances an opportunity to set up what it needs */
@@ -9,7 +9,7 @@ void USGameInstance::Init()
 {
 	Super::Init();
 
-	UIManager = NewObject<UUIManager>(this);
+	UIManager = NewObject<USUIManager>(this);
 	if (UIManager)
 	{
 		UIManager->Init();
@@ -28,7 +28,7 @@ void USGameInstance::Shutdown()
 	}
 }
 
-UUIManager* USGameInstance::GetUIManager()
+USUIManager* USGameInstance::GetUIManager()
 {
 	return UIManager;
 }

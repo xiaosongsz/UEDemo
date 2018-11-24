@@ -9,7 +9,7 @@ USGameInstance* USGameStatics::GetSGameInstance(const UObject* WorldContextObjec
 	return (USGameInstance*)UGameplayStatics::GetGameInstance(WorldContextObject);
 }
 
-UUIManager* USGameStatics::GetUIManager(const UObject* WorldContextObject)
+USUIManager* USGameStatics::GetUIManager(const UObject* WorldContextObject)
 {
 	return USGameStatics::GetSGameInstance(WorldContextObject)->GetUIManager();
 }

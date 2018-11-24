@@ -24,6 +24,6 @@ public:
 	virtual void Shutdown();
 
 protected:
-
-	USGameInstance* GetSGameInstance();
+    //游戏单例
+    USGameInstance* SGameInstance;
 };
