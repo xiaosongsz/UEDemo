@@ -48,8 +48,6 @@ void USBaseWidget::NativeConstruct()
     Super::NativeConstruct();
 
 	EStatus = EUIStatus::Create;
-	
-	UE_LOG(LogTemp, Log, TEXT("USBaseWidget::NativeConstruct()"));
 }
 
 void USBaseWidget::NativeDestruct()
@@ -74,8 +72,6 @@ void USBaseWidget::OnOpen(const FString &Param)
     EStatus = EUIStatus::Open;
     
     ReceiveOpen(Param);
-
-	UE_LOG(LogTemp, Log, TEXT("USBaseWidget::OnOpen()"));
 }
 
 void USBaseWidget::OnClose(const FString &Param)
@@ -83,8 +79,6 @@ void USBaseWidget::OnClose(const FString &Param)
     EStatus = EUIStatus::Close;
     
     ReceiveClose(Param);
-
-	UE_LOG(LogTemp, Log, TEXT("USBaseWidget::OnClose()"));
 }
 
 bool USBaseWidget::IsOpen()
