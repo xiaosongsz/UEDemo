@@ -14,13 +14,10 @@
 UENUM(BlueprintType)
 enum class EUIHierarchy : uint8
 {
-    //基础
     Basic,
     
-    //对话框
     Dialog,
     
-    //公告
     Notice
 };
 
@@ -28,11 +25,11 @@ enum class EUIHierarchy : uint8
  * UI配置结构体
  */
 USTRUCT(BlueprintType)
-struct FUITableRow : public FTableRowBase
+struct FSBaseWidgetTableRow : public FTableRowBase
 {
     GENERATED_USTRUCT_BODY()
     
-    FUITableRow()
+	FSBaseWidgetTableRow()
     {
         Hierarchy = EUIHierarchy::Dialog;
     }
@@ -47,23 +44,18 @@ struct FUITableRow : public FTableRowBase
      */
     virtual void OnPostDataImport(const UDataTable* InDataTable, const FName InRowName, TArray<FString>& OutCollectedImportProblems)
     {
-        //UI名 = 行名
         Name = InRowName;
     }
 public:
     
-    //名字
     FName Name;
     
-    //描述
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
         FText Describe;
     
-    //控件
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
         TSoftClassPtr<USBaseDialog> Dialog;
     
-    //层级
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
         EUIHierarchy Hierarchy;
 };
@@ -88,17 +80,19 @@ public:
     
     //打开UI
     UFUNCTION(BlueprintCallable)
-        void OpenUI(FName Name, FString Param);
+        void OpenWidget(FName Name, FString Param = "");
     
     //关闭UI
     UFUNCTION(BlueprintCallable)
-        void CloseUI(FName Name);
+        void CloseWidget(FName Name, FString Param = "");
     
-private:
+	//清理
+	UFUNCTION(BlueprintCallable)
+		void Clear(FString Param = "");
+
+protected:
     
-    //UI表
-    UDataTable *UITable;
+    UDataTable *WidgetTable;
     
-    //存在的UI
-    TMap<FName, USBaseWidget*> UIMap;
+    TMap<FName, USBaseWidget*> AllWidget;
 };

@@ -39,7 +39,7 @@ public:
 
      @param Param 参数
      */
-    void Open(const FString &Param);
+    void Open(const FString &Param = "");
     
     
     /**
@@ -47,7 +47,7 @@ public:
 
      @param Param 参数
      */
-    void Close(const FString &Param);
+    void Close(const FString &Param = "");
     
     
     /**
@@ -67,7 +67,7 @@ protected:
     virtual void NativeDestruct() override;
     
     /**
-     当控件打开时回调
+     当控件打开时调用
 
      @param Param 参数
      */
@@ -75,7 +75,7 @@ protected:
     
     
     /**
-     当控件关闭时回调
+     当控件关闭时调用
 
      @param Param 参数
      */

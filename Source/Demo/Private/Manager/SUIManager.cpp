@@ -12,55 +12,70 @@ void USUIManager::Init()
 
 void USUIManager::LoadTable()
 {
-    FString UITablePath = TEXT("/Game/Resources/Tables/UITable.UITable");
-    UITable = LoadObject<UDataTable>(this, *UITablePath);
+    FString UITablePath = TEXT("/Game/Resources/Tables/DialogTable.DialogTable");
+    WidgetTable = LoadObject<UDataTable>(this, *UITablePath);
 }
 
 void USUIManager::Shutdown()
 {
     Super::Shutdown();
+
+	Clear();
     
-    UITable = nullptr;
+	WidgetTable = nullptr;
 }
 
-void USUIManager::OpenUI(FName Name, FString Param)
+void USUIManager::OpenWidget(FName Name, FString Param)
 {
     FString ContextString;
-    FUITableRow *UIInfo = UITable->FindRow<FUITableRow>(Name, ContextString);
-    if (UIInfo)
+	FSBaseWidgetTableRow *WidgetRow = WidgetTable->FindRow<FSBaseWidgetTableRow>(Name, ContextString);
+    if (WidgetRow)
     {
-//        USBaseWidget **WidgetPtr = UIMap.Find(Name);
-//        UUIWidget *Widget = WidgetPtr ? *WidgetPtr : nullptr;
+        USBaseWidget **WidgetPtr = AllWidget.Find(Name);
+        USBaseWidget *Widget = WidgetPtr ? *WidgetPtr : nullptr;
 
-//        if (!Widget)
-//        {
-//            Widget = CreateWidget<UUIWidget>(UGameplayStatics::GetPlayerController(GetWorld(), 0), UIInfo->UIWidget.LoadSynchronous());
-//
-//            if (Widget)
-//            {
-//                UIMap.Add(Name, Widget);
-//                Widget->AddToViewport((int32)UIInfo->UIHierarchy);
-//            }
-//        }
-//
-//        if (Widget && !Widget->IsOpen())
-//        {
-//            Widget->OnOpen(Param);
-//        }
+		if (!Widget)
+		{
+			Widget = CreateWidget<USBaseWidget>(UGameplayStatics::GetPlayerController(GetWorld(), 0), WidgetRow->Dialog.LoadSynchronous());
+
+			if (Widget)
+			{
+				AllWidget.Add(Name, Widget);
+				Widget->AddToViewport((int32)WidgetRow->Hierarchy);
+			}
+		}
+
+		if (Widget && !Widget->IsOpen())
+		{
+			Widget->Open(Param);
+		}
     }
-    
-    UE_LOG(LogTemp, Log, TEXT("UIManager::OpenUI->%s"), &Name);
 }
 
-void USUIManager::CloseUI(FName Name)
+void USUIManager::CloseWidget(FName Name, FString Param)
 {
-//    UUIWidget **WidgetPtr = UIMap.Find(Name);
-//    UUIWidget *Widget = WidgetPtr ? *WidgetPtr : nullptr;
-//
-//    if (Widget->IsOpen())
-//    {
-//        Widget->OnClose();
-//    }
-    
-    UE_LOG(LogTemp, Log, TEXT("UIManager::CloseUI->%s"), &Name);
+	USBaseWidget **WidgetPtr = AllWidget.Find(Name);
+	USBaseWidget *Widget = WidgetPtr ? *WidgetPtr : nullptr;
+
+	if (Widget->IsOpen())
+	{
+		Widget->Close(Param);
+	}
+}
+
+void USUIManager::Clear(FString Param)
+{
+	for (auto& WidgetElem : AllWidget)
+	{
+		USBaseWidget *Widget = WidgetElem.Value;
+
+		if (Widget->IsOpen())
+		{
+			Widget->Close(Param);
+		}
+
+		Widget->RemoveFromParent();
+	}
+
+	AllWidget.Empty();
 }

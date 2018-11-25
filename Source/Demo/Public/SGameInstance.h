@@ -23,6 +23,10 @@ public:
 	/** virtual function to allow custom GameInstances an opportunity to do cleanup when shutting down */
 	virtual void Shutdown();
 
+protected:
+
+	/** Called when the game instance is started either normally or through PIE. */
+	virtual void OnStart();
 public:
     
     //获取UI管理
