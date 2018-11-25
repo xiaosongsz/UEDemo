@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
-#include "Widget/SBaseDialog.h"
+#include "Widget/SBaseWidget.h"
 #include "Manager/SBaseManager.h"
 #include "SUIManager.generated.h"
 
@@ -25,11 +25,11 @@ enum class EUIHierarchy : uint8
  * UI配置结构体
  */
 USTRUCT(BlueprintType)
-struct FSBaseWidgetTableRow : public FTableRowBase
+struct FWidgetTableRow : public FTableRowBase
 {
     GENERATED_USTRUCT_BODY()
     
-	FSBaseWidgetTableRow()
+	FWidgetTableRow()
     {
         Hierarchy = EUIHierarchy::Dialog;
     }
@@ -54,7 +54,7 @@ public:
         FText Describe;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-        TSoftClassPtr<USBaseDialog> Dialog;
+        TSoftClassPtr<USBaseWidget> Widget;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
         EUIHierarchy Hierarchy;
@@ -78,15 +78,12 @@ private:
     void LoadTable();
 public:
     
-    //打开UI
     UFUNCTION(BlueprintCallable)
-        void OpenWidget(FName Name, FString Param = "");
+		USBaseWidget* OpenWidget(FName Name, FString Param = "");
     
-    //关闭UI
     UFUNCTION(BlueprintCallable)
         void CloseWidget(FName Name, FString Param = "");
     
-	//清理
 	UFUNCTION(BlueprintCallable)
 		void Clear(FString Param = "");
 

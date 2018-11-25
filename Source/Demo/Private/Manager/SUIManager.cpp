@@ -12,7 +12,7 @@ void USUIManager::Init()
 
 void USUIManager::LoadTable()
 {
-    FString UITablePath = TEXT("/Game/Resources/Tables/DialogTable.DialogTable");
+    FString UITablePath = TEXT("/Game/Resources/Tables/SWidgetTable.SWidgetTable");
     WidgetTable = LoadObject<UDataTable>(this, *UITablePath);
 }
 
@@ -25,18 +25,20 @@ void USUIManager::Shutdown()
 	WidgetTable = nullptr;
 }
 
-void USUIManager::OpenWidget(FName Name, FString Param)
+USBaseWidget* USUIManager::OpenWidget(FName Name, FString Param)
 {
+	USBaseWidget *Widget = nullptr;
+
     FString ContextString;
-	FSBaseWidgetTableRow *WidgetRow = WidgetTable->FindRow<FSBaseWidgetTableRow>(Name, ContextString);
+	FWidgetTableRow *WidgetRow = WidgetTable->FindRow<FWidgetTableRow>(Name, ContextString);
     if (WidgetRow)
     {
         USBaseWidget **WidgetPtr = AllWidget.Find(Name);
-        USBaseWidget *Widget = WidgetPtr ? *WidgetPtr : nullptr;
+        Widget = WidgetPtr ? *WidgetPtr : nullptr;
 
 		if (!Widget)
 		{
-			Widget = CreateWidget<USBaseWidget>(UGameplayStatics::GetPlayerController(GetWorld(), 0), WidgetRow->Dialog.LoadSynchronous());
+			Widget = CreateWidget<USBaseWidget>(UGameplayStatics::GetPlayerController(GetWorld(), 0), WidgetRow->Widget.LoadSynchronous());
 
 			if (Widget)
 			{
@@ -50,6 +52,8 @@ void USUIManager::OpenWidget(FName Name, FString Param)
 			Widget->Open(Param);
 		}
     }
+
+	return Widget;
 }
 
 void USUIManager::CloseWidget(FName Name, FString Param)
