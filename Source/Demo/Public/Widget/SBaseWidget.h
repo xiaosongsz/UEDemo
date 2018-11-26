@@ -11,11 +11,10 @@ struct FWidgetTableRow;
 UENUM(BlueprintType)
 enum class EWidgetStatus : uint8
 {
-    Create,
+	Construct,
     Open,
-    Hide,
     Close,
-    Destory
+	Destruct
 };
 
 /**
@@ -27,9 +26,13 @@ class DEMO_API USBaseWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 
+	~USBaseWidget()
+	{
+		UE_LOG(LogTemp, Log, TEXT("USBaseWidget::~USBaseWidget() %s"), *GetFName().ToString());
+	}
+
 	void SetInfo(FWidgetTableRow *WidgetInfo);
 
-	//UFUNCTION(BlueprintPure)
 	FWidgetTableRow* GetInfo();
 
     void Open(const FString &Param = "");
@@ -44,9 +47,8 @@ public:
     
 protected:
 
-    virtual void NativeOnInitialized() override;
-    virtual void NativePreConstruct() override;
     virtual void NativeConstruct() override;
+
     virtual void NativeDestruct() override;
     
     virtual void OnOpen(const FString &Param);

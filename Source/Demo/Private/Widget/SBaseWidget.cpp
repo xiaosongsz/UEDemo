@@ -54,28 +54,20 @@ void USBaseWidget::Close(const FString &Param)
 	OnClose(Param);
 }
 
-void USBaseWidget::NativeOnInitialized()
-{
-    Super::NativeOnInitialized();
-}
-
-void USBaseWidget::NativePreConstruct()
-{
-    Super::NativePreConstruct();
-}
-
 void USBaseWidget::NativeConstruct()
 {
     Super::NativeConstruct();
 
-	WidgetStatus = EWidgetStatus::Create;
+	WidgetStatus = EWidgetStatus::Construct;
+
+	UE_LOG(LogTemp, Log, TEXT("USBaseWidget::NativeConstruct() %s"), *GetFName().ToString());
 }
 
 void USBaseWidget::NativeDestruct()
 {
     Super::NativeDestruct();
 
-	if (WidgetStatus == EWidgetStatus::Destory)
+	if (WidgetStatus == EWidgetStatus::Destruct)
 	{
 		return;
 	}
@@ -85,7 +77,9 @@ void USBaseWidget::NativeDestruct()
 		Close();
 	}
 
-	WidgetStatus = EWidgetStatus::Destory;
+	WidgetStatus = EWidgetStatus::Destruct;
+
+	UE_LOG(LogTemp, Log, TEXT("USBaseWidget::NativeDestruct() %s"), *GetFName().ToString());
 }
 
 void USBaseWidget::OnOpen(const FString &Param)
