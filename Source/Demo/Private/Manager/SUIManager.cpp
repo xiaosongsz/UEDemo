@@ -42,14 +42,16 @@ USBaseWidget* USUIManager::OpenWidget(FName Name, FString Param)
 
 			if (Widget)
 			{
+				Widget->SetInfo(WidgetRow);
+
 				AllWidget.Add(Name, Widget);
 				Widget->AddToViewport((int32)WidgetRow->Hierarchy);
-			}
-		}
 
-		if (Widget && !Widget->IsOpen())
-		{
-			Widget->Open(Param);
+				if (Widget->GetStatus() != EWidgetStatus::Open)
+				{
+					Widget->Open(Param);
+				}
+			}
 		}
     }
 
@@ -61,9 +63,16 @@ void USUIManager::CloseWidget(FName Name, FString Param)
 	USBaseWidget **WidgetPtr = AllWidget.Find(Name);
 	USBaseWidget *Widget = WidgetPtr ? *WidgetPtr : nullptr;
 
-	if (Widget->IsOpen())
+	if (Widget)
 	{
-		Widget->Close(Param);
+		if (Widget->GetStatus() != EWidgetStatus::Close)
+		{
+			Widget->Close(Param);
+		}
+
+		AllWidget.Remove(Name);
+
+		Widget->RemoveFromParent();
 	}
 }
 
@@ -73,7 +82,7 @@ void USUIManager::Clear(FString Param)
 	{
 		USBaseWidget *Widget = WidgetElem.Value;
 
-		if (Widget->IsOpen())
+		if (Widget->GetStatus() != EWidgetStatus::Close)
 		{
 			Widget->Close(Param);
 		}

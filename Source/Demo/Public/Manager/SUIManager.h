@@ -33,22 +33,10 @@ struct FWidgetTableRow : public FTableRowBase
     {
         Hierarchy = EUIHierarchy::Dialog;
     }
-    
-    /**
-     * Can be overridden by subclasses; Called whenever the owning data table is imported or re-imported.
-     * Allows for custom fix-ups, parsing, etc. after initial data is read in.
-     *
-     * @param InDataTable                    The data table that owns this row
-     * @param InRowName                        The name of the row we're performing fix-up on
-     * @param OutCollectedImportProblems    List of problems accumulated during import; Can be added to via this method
-     */
-    virtual void OnPostDataImport(const UDataTable* InDataTable, const FName InRowName, TArray<FString>& OutCollectedImportProblems)
-    {
-        Name = InRowName;
-    }
 public:
-    
-    FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName Name;
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
         FText Describe;
@@ -68,7 +56,7 @@ class DEMO_API USUIManager : public USBaseManager
 {
     GENERATED_BODY()
 public:
-    
+
     virtual void Init() override;
     
     virtual void Shutdown() override;

@@ -2,6 +2,27 @@
 
 #include "SBaseWidget.h"
 #include "Blueprint/WidgetTree.h"
+#include "SGameInstance.h"
+#include "Manager/SUIManager.h"
+
+void USBaseWidget::SetInfo(FWidgetTableRow *WidgetInfo)
+{
+	this->WidgetInfo = WidgetInfo;
+}
+
+FWidgetTableRow* USBaseWidget::GetInfo()
+{
+	if (!this->WidgetInfo)
+	{
+		USBaseWidget *Creator = dynamic_cast<USBaseWidget*>(GetOuter()->GetOuter());
+		if (Creator)
+		{
+			this->WidgetInfo = Creator->GetInfo();
+		}
+	}
+
+	return this->WidgetInfo;
+}
 
 void USBaseWidget::Open(const FString &Param)
 {
@@ -47,41 +68,50 @@ void USBaseWidget::NativeConstruct()
 {
     Super::NativeConstruct();
 
-	EStatus = EUIStatus::Create;
+	WidgetStatus = EWidgetStatus::Create;
 }
 
 void USBaseWidget::NativeDestruct()
 {
     Super::NativeDestruct();
 
-	if (EStatus == EUIStatus::Destory)
+	if (WidgetStatus == EWidgetStatus::Destory)
 	{
 		return;
 	}
 
-	if (EStatus != EUIStatus::Close)
+	if (WidgetStatus != EWidgetStatus::Close)
 	{
 		Close();
 	}
 
-	EStatus = EUIStatus::Destory;
+	WidgetStatus = EWidgetStatus::Destory;
 }
 
 void USBaseWidget::OnOpen(const FString &Param)
 {
-    EStatus = EUIStatus::Open;
+	WidgetStatus = EWidgetStatus::Open;
     
     ReceiveOpen(Param);
 }
 
 void USBaseWidget::OnClose(const FString &Param)
 {
-    EStatus = EUIStatus::Close;
+	WidgetStatus = EWidgetStatus::Close;
     
     ReceiveClose(Param);
 }
 
-bool USBaseWidget::IsOpen()
+EWidgetStatus USBaseWidget::GetStatus()
 {
-    return EStatus == EUIStatus::Open;
+	return WidgetStatus;
+}
+
+void USBaseWidget::CloseWidget(const FString &Param)
+{
+	FWidgetTableRow *WidgetInfo = GetInfo();
+	if (WidgetInfo)
+	{
+		GetGameInstance<USGameInstance>()->GetUIManager()->CloseWidget(WidgetInfo->Name, Param);
+	}
 }
