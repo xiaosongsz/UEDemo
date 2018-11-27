@@ -24,7 +24,7 @@ USBaseWidget* USBaseWidget::GetRoot()
 {
 	if (!Root)
 	{
-		USBaseWidget *Creator = dynamic_cast<USBaseWidget*>(GetOuter()->GetOuter());
+		USBaseWidget *Creator = Cast<USBaseWidget>(GetOuter()->GetOuter());
 
 		if (Creator)
 		{
@@ -43,7 +43,7 @@ void USBaseWidget::Open(const FString &Param)
 {
 	WidgetTree->ForEachWidget([&Param](UWidget* Widget){
 		
-		USBaseWidget *ChildWidget = dynamic_cast<USBaseWidget*>(Widget);
+		USBaseWidget *ChildWidget = Cast<USBaseWidget>(Widget);
 		if (ChildWidget)
 		{
 			ChildWidget->Open(Param);
@@ -58,7 +58,7 @@ void USBaseWidget::Close(const FString &Param)
 {
 	WidgetTree->ForEachWidget([&Param](UWidget* Widget) {
 
-		USBaseWidget *ChildWidget = dynamic_cast<USBaseWidget*>(Widget);
+		USBaseWidget *ChildWidget = Cast<USBaseWidget>(Widget);
 		if (ChildWidget)
 		{
 			ChildWidget->Close(Param);

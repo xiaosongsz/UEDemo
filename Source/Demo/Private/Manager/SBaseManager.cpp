@@ -8,7 +8,7 @@ void USBaseManager::Init()
 {
 	this->AddToRoot();
 
-    SGameInstance = dynamic_cast<USGameInstance*>(GetOuter());
+    SGameInstance = Cast<USGameInstance>(GetOuter());
 }
 
 /** virtual function to allow custom GameInstances an opportunity to do cleanup when shutting down */

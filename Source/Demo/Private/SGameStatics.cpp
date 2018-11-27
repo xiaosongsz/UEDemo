@@ -6,7 +6,7 @@
 
 USGameInstance* USGameStatics::GetSGameInstance(const UObject* WorldContextObject)
 {
-	return dynamic_cast<USGameInstance*>(UGameplayStatics::GetGameInstance(WorldContextObject));
+	return Cast<USGameInstance>(UGameplayStatics::GetGameInstance(WorldContextObject));
 }
 
 USUIManager* USGameStatics::GetUIManager(const UObject* WorldContextObject)
