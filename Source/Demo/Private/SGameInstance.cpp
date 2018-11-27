@@ -10,6 +10,7 @@ void USGameInstance::Init()
 	Super::Init();
 
 	UIManager = NewObject<USUIManager>(this);
+	
 	if (UIManager)
 	{
 		UIManager->Init();

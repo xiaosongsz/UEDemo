@@ -5,23 +5,38 @@
 #include "SGameInstance.h"
 #include "Manager/SUIManager.h"
 
-void USBaseWidget::SetInfo(FWidgetTableRow *WidgetInfo)
+void USBaseWidget::SetInfo(FWidgetTableRow* WidgetInfo)
 {
 	this->WidgetInfo = WidgetInfo;
 }
 
 FWidgetTableRow* USBaseWidget::GetInfo()
 {
-	if (!this->WidgetInfo)
+	if (!WidgetInfo)
+	{
+		WidgetInfo = GetRoot()->WidgetInfo;
+	}
+
+	return WidgetInfo;
+}
+
+USBaseWidget* USBaseWidget::GetRoot()
+{
+	if (!Root)
 	{
 		USBaseWidget *Creator = dynamic_cast<USBaseWidget*>(GetOuter()->GetOuter());
+
 		if (Creator)
 		{
-			this->WidgetInfo = Creator->GetInfo();
+			Root = Creator->GetRoot();
+		}
+		else
+		{
+			Root = this;
 		}
 	}
 
-	return this->WidgetInfo;
+	return Root;
 }
 
 void USBaseWidget::Open(const FString &Param)
@@ -60,7 +75,7 @@ void USBaseWidget::NativeConstruct()
 
 	WidgetStatus = EWidgetStatus::Construct;
 
-	UE_LOG(LogTemp, Log, TEXT("USBaseWidget::NativeConstruct() %s"), *GetFName().ToString());
+	//UE_LOG(LogTemp, Log, TEXT("USBaseWidget::NativeConstruct() %s"), *GetFName().ToString());
 }
 
 void USBaseWidget::NativeDestruct()
@@ -79,7 +94,7 @@ void USBaseWidget::NativeDestruct()
 
 	WidgetStatus = EWidgetStatus::Destruct;
 
-	UE_LOG(LogTemp, Log, TEXT("USBaseWidget::NativeDestruct() %s"), *GetFName().ToString());
+	//UE_LOG(LogTemp, Log, TEXT("USBaseWidget::NativeDestruct() %s"), *GetFName().ToString());
 }
 
 void USBaseWidget::OnOpen(const FString &Param)

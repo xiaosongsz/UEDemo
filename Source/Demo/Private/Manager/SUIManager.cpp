@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SUIManager.h"
-#include "Kismet/GameplayStatics.h"
+#include "SGameInstance.h"
 
 void USUIManager::Init()
 {
@@ -38,7 +38,7 @@ USBaseWidget* USUIManager::OpenWidget(FName Name, FString Param)
 
 		if (!Widget)
 		{
-			Widget = CreateWidget<USBaseWidget>(UGameplayStatics::GetPlayerController(GetWorld(), 0), WidgetRow->Widget.LoadSynchronous());
+			Widget = CreateWidget<USBaseWidget>(SGameInstance->GetFirstLocalPlayerController(), WidgetRow->Widget.LoadSynchronous());
 
 			if (Widget)
 			{

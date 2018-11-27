@@ -26,14 +26,7 @@ class DEMO_API USBaseWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 
-	~USBaseWidget()
-	{
-		UE_LOG(LogTemp, Log, TEXT("USBaseWidget::~USBaseWidget() %s"), *GetFName().ToString());
-	}
-
 	void SetInfo(FWidgetTableRow *WidgetInfo);
-
-	FWidgetTableRow* GetInfo();
 
     void Open(const FString &Param = "");
     
@@ -44,6 +37,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void CloseWidget(const FString &Param = "");
+
+	FWidgetTableRow* GetInfo();
+
+	UFUNCTION(BlueprintPure)
+		USBaseWidget* GetRoot();
     
 protected:
 
@@ -62,6 +60,8 @@ protected:
         void ReceiveClose(const FString &Param);
 
 protected:
+
+	USBaseWidget *Root;
 
 	FWidgetTableRow *WidgetInfo;
 
