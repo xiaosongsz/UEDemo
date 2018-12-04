@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/GameInstance.h"
+#include "Core/CleverInstance.h"
 #include "SGameInstance.generated.h"
 
 class USUIManager;
@@ -12,7 +12,7 @@ class USUIManager;
  * 游戏单例
  */
 UCLASS(config = Game, transient, BlueprintType, Blueprintable)
-class DEMO_API USGameInstance : public UGameInstance
+class DEMO_API USGameInstance : public UCleverInstance
 {
 	GENERATED_BODY()
 public:
