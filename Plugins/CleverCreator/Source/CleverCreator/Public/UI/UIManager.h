@@ -15,8 +15,8 @@ class CLEVERCREATOR_API UUIManager : public UBaseManager
 	GENERATED_BODY()
 	
 public:
-	virtual void Init();
+	virtual void Init() override;
 
-	virtual void Shutdown();
+	virtual void Shutdown() override;
 
 };

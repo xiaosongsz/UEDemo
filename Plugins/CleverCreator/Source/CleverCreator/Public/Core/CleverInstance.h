@@ -16,9 +16,9 @@ class CLEVERCREATOR_API UCleverInstance : public UGameInstance
 	GENERATED_BODY()
 public:
 
-	virtual void Init();
+	virtual void Init() override;
 
-	virtual void Shutdown();
+	virtual void Shutdown() override;
 
 public:
 
