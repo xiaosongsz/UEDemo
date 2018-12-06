@@ -8,15 +8,9 @@ void UCleverInstance::Init()
 {
 	Super::Init();
 
-	this->AddManager(USceneManager::StaticClass());
+	AddManager(USceneManager::StaticClass());
 
-	this->AddManager(UUIManager::StaticClass());
-
-	for (auto &Elem : ManagerMap)
-	{
-		UBaseManager* Manager = Elem.Value;
-		Manager->Init();
-	}
+	AddManager(UUIManager::StaticClass());
 }
 
 void UCleverInstance::Shutdown()
@@ -40,6 +34,7 @@ void UCleverInstance::AddManager(UClass *ManagerClass)
 	if (!ManagerPtr)
 	{
 		UBaseManager *Manager = NewObject<UBaseManager>(this, ManagerClass);
+		Manager->Init();
 		ManagerMap.Add(Name, Manager);
 	}
 }
