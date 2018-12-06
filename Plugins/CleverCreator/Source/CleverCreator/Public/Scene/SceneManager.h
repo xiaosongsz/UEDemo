@@ -13,5 +13,8 @@ UCLASS()
 class CLEVERCREATOR_API USceneManager : public UBaseManager
 {
 	GENERATED_BODY()
-	
+public:
+	virtual void Init();
+
+	virtual void Shutdown();
 };

@@ -3,14 +3,12 @@
 #include "BaseManager.h"
 #include "CleverInstance.h"
 
-/** virtual function to allow custom GameInstances an opportunity to set up what it needs */
 void UBaseManager::Init()
 {
-	
+	GameInstance = Cast<UCleverInstance>(GetOuter());
 }
 
-/** virtual function to allow custom GameInstances an opportunity to do cleanup when shutting down */
 void UBaseManager::Shutdown()
 {
-	
+	GameInstance = nullptr;
 }

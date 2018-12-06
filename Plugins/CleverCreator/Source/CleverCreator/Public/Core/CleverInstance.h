@@ -22,28 +22,13 @@ public:
 
 public:
 
-	template<typename ManagerT>
-	ManagerT* GetManager();
+	void AddManager(UClass *ManagerClass);
+
+	UBaseManager* GetManager(UClass *ManagerClass);
 
 	UBaseManager* GetManager(const FName &Name);
 
 protected:
-	TMap<FName, UBaseManager> ManagerMap;
+	UPROPERTY()
+	TMap<FName, UBaseManager*> ManagerMap;
 };
-
-template<typename ManagerT>
-ManagerT* UCleverInstance::GetManager()
-{
-	if (ManagerT == UBaseManager)
-	{
-		for (auto& Value : ManagerMap)
-		{
-			UBaseManager *Manager = Value.second;
-			if (Manager->GetClass() == ManagerT)
-			{
-				return Manager;
-			}
-		}
-	}
-	return nullptr;
-}
