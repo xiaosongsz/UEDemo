@@ -31,6 +31,6 @@ public:
 	UBaseManager* GetManager(const FName &Name);
 
 protected:
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY()
 	TMap<FName, UBaseManager*> ManagerMap;
 };
