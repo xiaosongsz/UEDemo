@@ -14,11 +14,6 @@ public class Demo : ModuleRules
 
         PrivateDependencyModuleNames.AddRange(new string[] {  });
 
-        PrivateDependencyModuleNames.AddRange(new string[] { "slua_unreal", "Slate", "SlateCore", "UMG" });
-
-        PrivateIncludePathModuleNames.AddRange(new string[] { "slua_unreal" });
-        PublicIncludePathModuleNames.AddRange(new string[] { "slua_unreal" });
-
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 
