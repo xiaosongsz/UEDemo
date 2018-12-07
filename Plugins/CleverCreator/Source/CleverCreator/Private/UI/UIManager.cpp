@@ -2,18 +2,23 @@
 
 #include "UIManager.h"
 
+DEFINE_LOG_CATEGORY_STATIC(UIManager, Log, All);
+
 void UUIManager::Init()
 {
 	Super::Init();
 
-	UE_LOG(LogTemp, Log, TEXT("UIManager::Init"));
+	FString UITablePath = TEXT("/Game/Resources/Tables/WidgetTable.WidgetTable");
+	WidgetTable = LoadObject<UDataTable>(this, *UITablePath);
+
+	UE_LOG(UIManager, Log, TEXT("Init"));
 }
 
 void UUIManager::Shutdown()
 {
 	Super::Shutdown();
 
-	UE_LOG(LogTemp, Log, TEXT("UIManager::Shutdown"));
+	UE_LOG(UIManager, Log, TEXT("Shutdown"));
 }
 
 UBaseWidget* UUIManager::OpenWidget(FName Name, FString Param)

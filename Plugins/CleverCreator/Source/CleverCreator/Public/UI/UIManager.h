@@ -9,6 +9,40 @@
 
 class UBaseWidget;
 
+//UENUM(BlueprintType)
+//enum class EUIHierarchy : uint8
+//{
+//	Basic,
+//
+//	Dialog,
+//
+//	Notice
+//};
+//
+//USTRUCT(BlueprintType)
+//struct FWidgetTableRow : public FTableRowBase
+//{
+//	GENERATED_USTRUCT_BODY()
+//
+//		FWidgetTableRow()
+//	{
+//		Hierarchy = EUIHierarchy::Dialog;
+//	}
+//public:
+//
+//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+//		FName Name;
+//
+//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+//		FText Describe;
+//
+//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+//		TSoftClassPtr<UBaseWidget> Widget;
+//
+//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+//		EUIHierarchy Hierarchy;
+//};
+
 /**
  * 
  */
