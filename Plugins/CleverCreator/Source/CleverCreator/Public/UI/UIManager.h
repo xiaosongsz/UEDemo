@@ -5,43 +5,73 @@
 #include "CoreMinimal.h"
 #include "Engine/DataTable.h"
 #include "Core/BaseManager.h"
+#include "UserWidget/BaseWidget.h"
 #include "UIManager.generated.h"
 
-class UBaseWidget;
+UENUM(BlueprintType)
+enum class EWidgetHierarchy : uint8
+{
+	Basic,
 
-//UENUM(BlueprintType)
-//enum class EUIHierarchy : uint8
-//{
-//	Basic,
-//
-//	Dialog,
-//
-//	Notice
-//};
-//
-//USTRUCT(BlueprintType)
-//struct FWidgetTableRow : public FTableRowBase
-//{
-//	GENERATED_USTRUCT_BODY()
-//
-//		FWidgetTableRow()
-//	{
-//		Hierarchy = EUIHierarchy::Dialog;
-//	}
-//public:
-//
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//		FName Name;
-//
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//		FText Describe;
-//
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//		TSoftClassPtr<UBaseWidget> Widget;
-//
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//		EUIHierarchy Hierarchy;
-//};
+	Dialog,
+
+	Notice
+};
+
+/**
+ *
+ */
+USTRUCT(BlueprintType)
+struct FWidgetTableRow : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FText Describe;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TSoftClassPtr<UBaseWidget> Widget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		uint8 ZOrder;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		EWidgetHierarchy Hierarchy;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool bStack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool bMulti;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		ESlateVisibility Visibility;
+};
+
+/**
+ *
+ */
+USTRUCT(BlueprintType)
+struct FGroupTableRow : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FText Describe;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName ParentName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<FName> WidgetNames;
+};
 
 /**
  * 
@@ -52,6 +82,7 @@ class CLEVERCREATOR_API UUIManager : public UBaseManager
 	GENERATED_BODY()
 	
 public:
+
 	virtual void Init() override;
 
 	virtual void Shutdown() override;
@@ -74,25 +105,16 @@ public:
 		void CloseGroup(FName Name);
 
 	UFUNCTION()
-		UBaseWidget* OpenDialog(FName Name, FString Param);
-
-	UFUNCTION()
-		UBaseWidget* FindDialog(FName Name);
-
-	UFUNCTION()
-		void CloseDialog(FName Name, FString Param);
-
-	UFUNCTION()
 		UBaseWidget* CreateWidget(UObject *OwningObject, FName Name);
 
 protected:
 
 	UPROPERTY()
-		UDataTable *GroupTable;
+		TMap<FName, FGroupTableRow> GroupMap;
 
 	UPROPERTY()
-		UDataTable *WidgetTable;
+		TMap<FName, FWidgetTableRow> TypeMap;
 
 	UPROPERTY()
-		TMap<FName, UBaseWidget*> WidgetMap;
+		TArray<UBaseWidget*> WidgetMap;
 };

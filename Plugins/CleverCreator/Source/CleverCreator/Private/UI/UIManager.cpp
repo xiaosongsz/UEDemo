@@ -8,8 +8,8 @@ void UUIManager::Init()
 {
 	Super::Init();
 
-	FString UITablePath = TEXT("/Game/Resources/Tables/WidgetTable.WidgetTable");
-	WidgetTable = LoadObject<UDataTable>(this, *UITablePath);
+	//FString UITablePath = TEXT("/Game/Resources/Tables/WidgetTable.WidgetTable");
+	//WidgetTable = LoadObject<UDataTable>(this, *UITablePath);
 
 	UE_LOG(UIManager, Log, TEXT("Init"));
 }
@@ -42,21 +42,6 @@ void UUIManager::OpenGroup(FName Name)
 }
 
 void UUIManager::CloseGroup(FName Name)
-{
-
-}
-
-UBaseWidget* UUIManager::OpenDialog(FName Name, FString Param)
-{
-	return nullptr;
-}
-
-UBaseWidget* UUIManager::FindDialog(FName Name)
-{
-	return nullptr;
-}
-
-void UUIManager::CloseDialog(FName Name, FString Param)
 {
 
 }
