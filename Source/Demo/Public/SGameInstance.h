@@ -6,8 +6,6 @@
 #include "Core/CleverInstance.h"
 #include "SGameInstance.generated.h"
 
-class USUIManager;
-
 /**
  * 游戏单例
  */
@@ -27,11 +25,4 @@ protected:
 
 	/** Called when the game instance is started either normally or through PIE. */
 	virtual void OnStart();
-public:
-    
-    //获取UI管理
-	UFUNCTION(BlueprintPure)
-	USUIManager* GetUIManager();
-private:
-	USUIManager* UIManager;
 };
