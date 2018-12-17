@@ -28,11 +28,4 @@ public:
 
 	UFUNCTION(BlueprintPure, meta = (WorldContext = "WorldContextObject"))
 		static UUIManager* GetUIManager(const UObject* WorldContextObject);
-
-private:
-	static UCleverInstance* CleverInstance;
-
-	static USceneManager* SceneManager;
-
-	static UUIManager* UIManager;
 };

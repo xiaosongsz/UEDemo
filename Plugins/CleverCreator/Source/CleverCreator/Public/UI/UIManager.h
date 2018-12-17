@@ -56,6 +56,21 @@ public:
  *
  */
 USTRUCT(BlueprintType)
+struct FGroupWidgetTableRow : public FTableRowBase
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FName Name;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FString Param;
+};
+
+/**
+ *
+ */
+USTRUCT(BlueprintType)
 struct FGroupTableRow : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
@@ -70,7 +85,7 @@ public:
 		FName ParentName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TArray<FName> WidgetNames;
+		TArray<FGroupWidgetTableRow> Widgets;
 };
 
 /**
@@ -99,13 +114,16 @@ public:
 		void CloseWidget(FName Name, FString Param);
 
 	UFUNCTION()
+		void ClearWidgets();
+
+	UFUNCTION()
 		void OpenGroup(FName Name);
 
 	UFUNCTION()
 		void CloseGroup(FName Name);
 
 	UFUNCTION()
-		UBaseWidget* CreateWidget(UObject *OwningObject, FName Name);
+		UBaseWidget* GetWidget(FName Name);
 
 protected:
 
@@ -116,5 +134,5 @@ protected:
 		TMap<FName, FWidgetTableRow> TypeMap;
 
 	UPROPERTY()
-		TArray<UBaseWidget*> WidgetMap;
+		TMap<FName, UBaseWidget*> WidgetMap;
 };

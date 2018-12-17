@@ -6,43 +6,33 @@
 #include "Scene/SceneManager.h"
 #include "UI/UIManager.h"
 
-UCleverInstance* UCleverFunctionLibrary::CleverInstance;
-
-USceneManager* UCleverFunctionLibrary::SceneManager;
-
-UUIManager* UCleverFunctionLibrary::UIManager;
-
 UCleverInstance* UCleverFunctionLibrary::GetCleverInstance(const UObject* WorldContextObject)
 {
-	if (!CleverInstance)
-	{
-		CleverInstance = Cast<UCleverInstance>(UGameplayStatics::GetGameInstance(WorldContextObject));
-	}
-	return CleverInstance;
+	return Cast<UCleverInstance>(UGameplayStatics::GetGameInstance(WorldContextObject));
 }
 
 USceneManager* UCleverFunctionLibrary::GetSceneManager(const UObject* WorldContextObject)
 {
-	if (!SceneManager)
+	USceneManager *SceneManager = nullptr;
+
+	UCleverInstance *Instance = GetCleverInstance(WorldContextObject);
+	if (Instance)
 	{
-		UCleverInstance *Instance = GetCleverInstance(WorldContextObject);
-		if (Instance)
-		{
-			SceneManager = Cast<USceneManager>(Instance->GetManager(USceneManager::StaticClass()));
-		}
+		SceneManager = Cast<USceneManager>(Instance->GetManager(USceneManager::StaticClass()));
 	}
+
 	return SceneManager;
 }
 
 UUIManager* UCleverFunctionLibrary::GetUIManager(const UObject* WorldContextObject)
 {
-	if (!UIManager)
+	UUIManager *UIManager = nullptr;
+
+	UCleverInstance *Instance = GetCleverInstance(WorldContextObject);
+	if (Instance)
 	{
-		UCleverInstance *Instance = GetCleverInstance(WorldContextObject);
-		if (Instance)
-		{
-			UIManager = Cast<UUIManager>(Instance->GetManager(UUIManager::StaticClass()));
-		}
+		UIManager = Cast<UUIManager>(Instance->GetManager(UUIManager::StaticClass()));
 	}
+
 	return UIManager;
 }

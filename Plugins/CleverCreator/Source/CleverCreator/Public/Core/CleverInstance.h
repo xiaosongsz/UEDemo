@@ -23,14 +23,14 @@ public:
 public:
 
 	UFUNCTION(BlueprintCallable)
-	void AddManager(UClass *ManagerClass);
+		void AddManager(UClass *ManagerClass);
 
 	UBaseManager* GetManager(UClass *ManagerClass);
 
 	UFUNCTION(BlueprintCallable)
-	UBaseManager* GetManager(const FName &Name);
+		UBaseManager* GetManager(const FName &Name);
 
 protected:
 	UPROPERTY()
-	TMap<FName, UBaseManager*> ManagerMap;
+		TMap<FName, UBaseManager*> ManagerMap;
 };
