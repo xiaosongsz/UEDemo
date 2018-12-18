@@ -9,10 +9,38 @@ void UUIManager::Init()
 {
 	Super::Init();
 
-	//FString UITablePath = TEXT("/Game/Resources/Tables/WidgetTable.WidgetTable");
-	//WidgetTable = LoadObject<UDataTable>(this, *UITablePath);
-
 	UE_LOG(UIManager, Log, TEXT("Init"));
+}
+
+void UUIManager::LoadTable()
+{
+	UObject *TableObject = WidgetTablePath.TryLoad();
+	if (TableObject)
+	{
+		UDataTable *WidgetTable = Cast<UDataTable>(TableObject);
+
+		if (WidgetTable)
+		{
+			FString ContextString;
+			WidgetTable->ForeachRow<FWidgetTableRow>(ContextString, [this](FName Name, FWidgetTableRow Value) {
+				TypeMap.Add(Value.Name, Value);
+			});
+		}
+	}
+
+	TableObject = GroupTablePath.TryLoad();
+	if (TableObject)
+	{
+		UDataTable *WidgetTable = Cast<UDataTable>(TableObject);
+
+		if (WidgetTable)
+		{
+			FString ContextString;
+			WidgetTable->ForeachRow<FGroupTableRow>(ContextString, [this](FName Name, FGroupTableRow Value) {
+				GroupMap.Add(Value.Name, Value);
+			});
+		}
+	}
 }
 
 void UUIManager::Shutdown()
@@ -34,7 +62,9 @@ UBaseWidget* UUIManager::OpenWidget(FName Name, FString Param)
 		{
 			WidgetMap.Add(Name, Widget);
 
-			int32 ZOrder = Widget->GetInfo()->ZOrder * 100;
+			uint8 Hierarchy = (uint8)Widget->GetInfo()->Hierarchy;
+			uint8 ZOrder = Widget->GetInfo()->ZOrder;
+			int32 RealZOrder = Hierarchy * 100 + ZOrder;
 			Widget->AddToViewport(ZOrder);
 		}
 	}
@@ -64,8 +94,10 @@ void UUIManager::CloseWidget(FName Name, FString Param)
 
 	if (Widget)
 	{
-		WidgetMap.Remove(Name);
 		Widget->DoClose(Param);
+
+		Widget->RemoveFromParent();
+		WidgetMap.Remove(Name);
 	}
 }
 

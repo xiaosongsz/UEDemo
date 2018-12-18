@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BaseWidget.h"
+#include "Blueprint/WidgetTree.h"
 #include "UI/UIManager.h"
 #include "CleverFunctionLibrary.h"
 
@@ -8,12 +9,30 @@ DEFINE_LOG_CATEGORY_STATIC(BaseWidget, Log, All);
 
 void UBaseWidget::DoOpen(const FString &Param)
 {
+	WidgetTree->ForEachWidget([&Param](UWidget* Widget) {
 
+		UBaseWidget *ChildWidget = Cast<UBaseWidget>(Widget);
+		if (ChildWidget)
+		{
+			ChildWidget->DoOpen(Param);
+		}
+	});
+
+	NativeOpen(Param);
 }
 
 void UBaseWidget::DoClose(const FString &Param)
 {
-	RemoveFromParent();
+	WidgetTree->ForEachWidget([&Param](UWidget* Widget) {
+
+		UBaseWidget *ChildWidget = Cast<UBaseWidget>(Widget);
+		if (ChildWidget)
+		{
+			ChildWidget->DoClose(Param);
+		}
+	});
+
+	NativeClose(Param);
 }
 
 void UBaseWidget::Close(const FString &Param)
@@ -90,12 +109,16 @@ void UBaseWidget::NativeOpen(const FString &Param)
 {
 	State = EWidgetState::Open;
 
+	OnOpen(Param);
+
 	UE_LOG(BaseWidget, Log, TEXT("NativeOpen"));
 }
 
 void UBaseWidget::NativeClose(const FString &Param)
 {
 	State = EWidgetState::Close;
+
+	OnClose(Param);
 
 	UE_LOG(BaseWidget, Log, TEXT("NativeClose"));
 }

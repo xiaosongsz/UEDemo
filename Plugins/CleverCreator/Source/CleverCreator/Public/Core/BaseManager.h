@@ -16,9 +16,14 @@ class CLEVERCREATOR_API UBaseManager : public UObject
 	GENERATED_BODY()
 
 public:
+
 	virtual void Init();
 
 	virtual void Shutdown();
+
+protected:
+
+	virtual void LoadTable();
 
 protected:
 	UCleverInstance* GameInstance;

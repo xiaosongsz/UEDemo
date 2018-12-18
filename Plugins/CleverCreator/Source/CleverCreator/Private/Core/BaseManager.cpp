@@ -6,9 +6,16 @@
 void UBaseManager::Init()
 {
 	GameInstance = Cast<UCleverInstance>(GetOuter());
+
+	LoadTable();
 }
 
 void UBaseManager::Shutdown()
 {
 	GameInstance = nullptr;
+}
+
+void UBaseManager::LoadTable()
+{
+
 }

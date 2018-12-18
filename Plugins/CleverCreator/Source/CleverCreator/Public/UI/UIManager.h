@@ -8,6 +8,9 @@
 #include "UserWidget/BaseWidget.h"
 #include "UIManager.generated.h"
 
+/**
+ *
+ */
 UENUM(BlueprintType)
 enum class EWidgetHierarchy : uint8
 {
@@ -91,7 +94,7 @@ public:
 /**
  * 
  */
-UCLASS()
+UCLASS(Config = Clever, defaultconfig)
 class CLEVERCREATOR_API UUIManager : public UBaseManager
 {
 	GENERATED_BODY()
@@ -104,28 +107,38 @@ public:
 
 public:
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		UBaseWidget* OpenWidget(FName Name, FString Param);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		UBaseWidget* FindWidget(FName Name);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void CloseWidget(FName Name, FString Param);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void ClearWidgets();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void OpenGroup(FName Name);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void CloseGroup(FName Name);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		UBaseWidget* GetWidget(FName Name);
 
 protected:
+
+	virtual void LoadTable() override;
+
+protected:
+
+	UPROPERTY(Config)
+		FSoftObjectPath WidgetTablePath;
+
+	UPROPERTY(Config)
+		FSoftObjectPath GroupTablePath;
 
 	UPROPERTY()
 		TMap<FName, FGroupTableRow> GroupMap;
