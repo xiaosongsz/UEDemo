@@ -67,18 +67,10 @@ void ASluaActor::BeginPlay()
 		return nullptr;
 	});
 	state->doFile("main");
-	state->call("begin",this->GetWorld(),this);
 }
 
 // Called every frame
 void ASluaActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	auto slua = FindComponentByClass<USluaComponent>();
-	if(!slua) return;
-	
-	auto state = slua->State();
-	state->call("update",DeltaTime);
-	GEngine->ForceGarbageCollection(true);
 }
