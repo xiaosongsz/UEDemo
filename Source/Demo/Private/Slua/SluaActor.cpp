@@ -66,7 +66,7 @@ void ASluaActor::BeginPlay()
 
 		return nullptr;
 	});
-	state->doFile("main");
+	state->doFile("Main");
 }
 
 // Called every frame

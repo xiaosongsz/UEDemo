@@ -1,5 +1,4 @@
-require("core/core.header")
+--CleverCreator
+require("CleverCreator/Header")
 
-local tClass = require("ui/tClass")
-
-local tObject = tClass:create()
+print('Hello sLua')
