@@ -2,12 +2,19 @@
 
 #include "UIManager.h"
 #include "Core/CleverInstance.h"
+#include "Lua/LuaManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(UIManager, Log, All);
 
 void UUIManager::Init()
 {
 	Super::Init();
+
+	ULuaManager *LuaManager = Cast<ULuaManager>(GameInstance->GetManager(ULuaManager::StaticClass()));
+	if (LuaManager)
+	{
+		LuaManager->GetState()->call("C_UIManager_Init", this);
+	}
 
 	UE_LOG(UIManager, Log, TEXT("Init"));
 }
@@ -163,6 +170,12 @@ UBaseWidget* UUIManager::GetWidget(FName Name)
 	{
 		Widget = CreateWidget<UBaseWidget>(GameInstance, WidgetRow->Widget.LoadSynchronous());
 		Widget->SetInfo(WidgetRow);
+	}
+
+	ULuaManager *LuaManager = Cast<ULuaManager>(GameInstance->GetManager(ULuaManager::StaticClass()));
+	if (LuaManager)
+	{
+		LuaManager->GetState()->call("C_UIManager_CreateWidget", Widget);
 	}
 
 	return Widget;

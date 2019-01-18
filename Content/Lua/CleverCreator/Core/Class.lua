@@ -1,33 +1,28 @@
-function class(name, super)
+
+--定义一个类
+function class(name, base)
     local _class = {}
+
     _class._type = name
 
-    --基类
-    local _base = {
-        --构造函数
-        constructor = function() end,
-
-        --创建对象
-        __call = function(_class, ...)
-            local _object = {}
-
-            --设置元表
-            setmetatable(_object, {__index = _class})
-
-            --构造函数
-            _object:constructor(...)
-
-            return _object
-        end,
-    }
-
-    --设置父类
-    if super then
-        _class._super = super
-        _base.__index = super
+    local super = {}
+    super.constructor = function() end
+    super.__call = function(class, ...)
+        local _object = {}
+        _object._class = class
+        setmetatable(_object, {__index = class})
+        _object:constructor(...)
+        return _object
     end
 
-    setmetatable(_class, _base)
+    base = (base and type(base) == 'table' and base._type) and base or nil
+    if base then
+        setmetatable(super, base)
+    end
+
+    _class._base = base
+
+    setmetatable(_class, super)
 
     return _class
 end

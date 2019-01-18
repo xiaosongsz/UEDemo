@@ -30,7 +30,6 @@
 #else
 #include "Engine/GameEngine.h"
 #endif
-#include "LuaMemoryProfile.h"
 
 namespace slua {
 
@@ -39,7 +38,7 @@ namespace slua {
         RegMetaMethod(L, loadUI);
         RegMetaMethod(L, createDelegate);
 		RegMetaMethod(L, loadClass);
-		RegMetaMethod(L, dumpUObjects);
+		RegMetaMethod(L, dumpLeak);
         lua_setglobal(L,"slua");
     }
 
@@ -95,7 +94,7 @@ namespace slua {
         obj->bindFunction(L,1);
         return LuaObject::push(L,obj);
     }
-	int SluaUtil::dumpUObjects(lua_State * L)
+	int SluaUtil::dumpLeak(lua_State * L)
 	{
 		auto state = LuaState::get(L);
 		auto& map = state->cacheMap();
@@ -107,21 +106,4 @@ namespace slua {
 		}
 		return 1;
 	}
-
-#if WITH_EDITOR
-	void dumpUObjects() {
-		auto state = LuaState::get();
-		if (!state) return;
-		auto& map = state->cacheMap();
-		for (auto& it : map) {
-			Log::Log("Pushed UObject %s", TCHAR_TO_UTF8(*getUObjName(it.Key)));
-		}
-	}
-
-	static FAutoConsoleCommand CVarDumpUObjects(
-		TEXT("slua.DumpUObjects"),
-		TEXT("Dump all uobject that referenced by lua in main state"),
-		FConsoleCommandDelegate::CreateStatic(dumpUObjects),
-		ECVF_Cheat);
-#endif
 }
