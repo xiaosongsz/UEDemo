@@ -3,10 +3,13 @@
 #include "CleverInstance.h"
 #include "Scene/SceneManager.h"
 #include "UI/UIManager.h"
+#include "Lua/LuaManager.h"
 
 void UCleverInstance::Init()
 {
 	Super::Init();
+
+	AddManager(ULuaManager::StaticClass());
 
 	AddManager(USceneManager::StaticClass());
 

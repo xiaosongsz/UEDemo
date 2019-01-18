@@ -39,6 +39,7 @@ public class CleverCreator : ModuleRules
 				"Slate",
 				"SlateCore",
                 "UMG",
+                "slua_unreal",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
