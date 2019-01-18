@@ -5,6 +5,7 @@ function dump(table, indent)
     for i=1,indent do
         head = head..'-'
     end
+    print(head, table)
     for k,v in pairs(table) do
         print(head, k, v)
         if type(v) == 'table' then
