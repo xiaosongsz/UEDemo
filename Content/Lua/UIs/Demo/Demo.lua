@@ -1,7 +1,7 @@
-local Demo = class("Demo", BaseWidget)
+-- local Demo = class("Demo", BaseWidget)
 
-function Demo:constructor()
-    print("Demo:constructor")
-end
+-- function Demo:constructor()
+--     print("Demo:constructor")
+-- end
 
-return Demo
+-- return Demo

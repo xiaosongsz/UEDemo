@@ -1,6 +1,14 @@
+--类表
+local ClassTable = {}
+CleverCreator.ClassTable = ClassTable
 
 --定义一个类
 function class(name, base)
+    if ClassTable[name] then
+        error("class.已经定义过此类")
+        return
+    end
+
     local _class = {}
     _class._type = name
     _class._base = base
@@ -22,29 +30,12 @@ function class(name, base)
 
     setmetatable(_class, _index)
 
+    ClassTable[name] = _class
+
     return _class
 end
 
---虚幻类
-UClass = class("UClass")
-
-function UClass:constructor(userdata)
-    self._userdata = userdata
-    local u_mtable = getmetatable(userdata)
-    local u_index = u_mtable.__index
-    
-    local mtable = getmetatable(self)
-    setmetatable(self, {__index = function(obj, key)
-        return function(obj, ...)
-            local func = u_index(userdata, key)
-            if func then
-                return func(userdata, ...)
-            end
-        end
-    end
-    })
-end
-
-function UClass:doUClass()
-    print("UClass:doUClass")
+--寻找定义好的类
+function findClass(name)
+    return ClassTable[name]
 end

@@ -79,18 +79,7 @@ void ULuaManager::DoMain()
 
 	State.doFile("Main");
 
-	Mapped(GameInstance);
-
 	bDoMain = true;
-}
 
-void ULuaManager::Mapped(UObject *Object)
-{
-	if (!bDoMain)
-	{
-		UE_LOG(LuaManager, Error, TEXT("Don't DoMain"));
-		return;
-	}
-
-	State.call("LuaManager_Mapped", Object, Object->GetName());
+	State.call("CleverCreator_Init", GameInstance);
 }

@@ -165,11 +165,5 @@ UBaseWidget* UUIManager::GetWidget(FName Name)
 		Widget->SetInfo(WidgetRow);
 	}
 
-	ULuaManager *LuaManager = GameInstance->GetLuaManager();
-	if (LuaManager)
-	{
-		LuaManager->Mapped(Widget);
-	}
-
 	return Widget;
 }

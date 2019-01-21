@@ -1,5 +1,5 @@
-BaseWidget = class('BaseWidget')
+-- BaseWidget = class('BaseWidget')
 
-function BaseWidget:constructor()
-    print("BaseWidget:constructor")
-end
+-- function BaseWidget:constructor()
+--     print("BaseWidget:constructor")
+-- end
