@@ -1,14 +1,6 @@
 --CleverCreator
-require("CleverCreator/Header")
+require("CleverCreator/CleverCreator")
 
 print('Hello sLua')
 
 print("----------------------------------------")
-
-function BeginPlay()
-    print("BeginPlay")
-    local demo = UIManager:OpenWidget("Demo", "")
-    -- UIManager:OpenGroup("Loading")
-    print(demo)
-    print(UIManager)
-end

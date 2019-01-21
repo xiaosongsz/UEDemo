@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CleverInstance.h"
+#include "BaseManager.h"
 #include "Scene/SceneManager.h"
 #include "UI/UIManager.h"
 #include "Lua/LuaManager.h"
@@ -52,4 +53,31 @@ UBaseManager* UCleverInstance::GetManager(UClass *ManagerClass)
 UBaseManager* UCleverInstance::GetManager(const FName &Name)
 {
 	return *ManagerMap.Find(Name);
+}
+
+ULuaManager* UCleverInstance::GetLuaManager()
+{
+	if (!LuaManager)
+	{
+		LuaManager = Cast<ULuaManager>(GetManager(ULuaManager::StaticClass()));
+	}
+	return LuaManager;
+}
+
+USceneManager* UCleverInstance::GetSceneManager()
+{
+	if (!SceneManager)
+	{
+		SceneManager = Cast<USceneManager>(GetManager(USceneManager::StaticClass()));
+	}
+	return SceneManager;
+}
+
+UUIManager* UCleverInstance::GetUIManager()
+{
+	if (!UIManager)
+	{
+		UIManager = Cast<UUIManager>(GetManager(UUIManager::StaticClass()));
+	}
+	return UIManager;
 }

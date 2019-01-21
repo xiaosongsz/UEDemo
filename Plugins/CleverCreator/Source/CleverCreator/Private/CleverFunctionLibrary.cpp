@@ -11,28 +11,17 @@ UCleverInstance* UCleverFunctionLibrary::GetCleverInstance(const UObject* WorldC
 	return Cast<UCleverInstance>(UGameplayStatics::GetGameInstance(WorldContextObject));
 }
 
+ULuaManager* UCleverFunctionLibrary::GetLuaManager(const UObject* WorldContextObject)
+{
+	return GetCleverInstance(WorldContextObject)->GetLuaManager();
+}
+
 USceneManager* UCleverFunctionLibrary::GetSceneManager(const UObject* WorldContextObject)
 {
-	USceneManager *SceneManager = nullptr;
-
-	UCleverInstance *Instance = GetCleverInstance(WorldContextObject);
-	if (Instance)
-	{
-		SceneManager = Cast<USceneManager>(Instance->GetManager(USceneManager::StaticClass()));
-	}
-
-	return SceneManager;
+	return GetCleverInstance(WorldContextObject)->GetSceneManager();
 }
 
 UUIManager* UCleverFunctionLibrary::GetUIManager(const UObject* WorldContextObject)
 {
-	UUIManager *UIManager = nullptr;
-
-	UCleverInstance *Instance = GetCleverInstance(WorldContextObject);
-	if (Instance)
-	{
-		UIManager = Cast<UUIManager>(Instance->GetManager(UUIManager::StaticClass()));
-	}
-
-	return UIManager;
+	return GetCleverInstance(WorldContextObject)->GetUIManager();
 }

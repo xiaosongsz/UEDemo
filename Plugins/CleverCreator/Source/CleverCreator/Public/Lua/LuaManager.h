@@ -27,6 +27,14 @@ public:
 
 	LuaState* GetState();
 
+	UFUNCTION(BlueprintCallable)
+		void DoMain();
+
+	UFUNCTION(BlueprintCallable)
+		void Mapped(UObject *Object);
+
 private:
 	LuaState State;
+
+	bool bDoMain;
 };

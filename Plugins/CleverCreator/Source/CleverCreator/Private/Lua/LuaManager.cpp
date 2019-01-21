@@ -32,6 +32,31 @@ void ULuaManager::Init()
 
 	State.init();
 
+	bDoMain = false;
+
+	UE_LOG(LuaManager, Log, TEXT("Init"));
+}
+
+void ULuaManager::Shutdown()
+{
+	State.close();
+
+	bDoMain = false;
+}
+
+LuaState* ULuaManager::GetState()
+{
+	return &State;
+}
+
+void ULuaManager::DoMain()
+{
+	if (bDoMain)
+	{
+		UE_LOG(LuaManager, Error, TEXT("Has DoMain"));
+		return;
+	}
+
 	State.setLoadFileDelegate([](const char* fn, uint32& len, FString& filepath)->uint8* {
 
 		IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
@@ -51,17 +76,21 @@ void ULuaManager::Init()
 
 		return nullptr;
 	});
+
 	State.doFile("Main");
 
-	UE_LOG(LuaManager, Log, TEXT("Init"));
+	Mapped(GameInstance);
+
+	bDoMain = true;
 }
 
-void ULuaManager::Shutdown()
+void ULuaManager::Mapped(UObject *Object)
 {
-	State.close();
-}
+	if (!bDoMain)
+	{
+		UE_LOG(LuaManager, Error, TEXT("Don't DoMain"));
+		return;
+	}
 
-LuaState* ULuaManager::GetState()
-{
-	return &State;
+	State.call("LuaManager_Mapped", Object, Object->GetName());
 }

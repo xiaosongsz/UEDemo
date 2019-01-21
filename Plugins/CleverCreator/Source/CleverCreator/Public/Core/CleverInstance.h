@@ -4,8 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "BaseManager.h"
 #include "CleverInstance.generated.h"
+
+class UBaseManager;
+class ULuaManager;
+class USceneManager;
+class UUIManager;
 
 /**
  * 
@@ -29,6 +33,23 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		UBaseManager* GetManager(const FName &Name);
+
+public:
+	UFUNCTION(BlueprintPure)
+		ULuaManager* GetLuaManager();
+
+	UFUNCTION(BlueprintPure)
+		USceneManager* GetSceneManager();
+
+	UFUNCTION(BlueprintPure)
+		UUIManager* GetUIManager();
+
+private:
+	ULuaManager *LuaManager;
+
+	USceneManager *SceneManager;
+
+	UUIManager *UIManager;
 
 protected:
 	UPROPERTY()

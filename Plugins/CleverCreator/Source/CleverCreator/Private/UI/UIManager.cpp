@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "UIManager.h"
-#include "Core/CleverInstance.h"
 #include "Lua/LuaManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(UIManager, Log, All);
@@ -9,12 +8,6 @@ DEFINE_LOG_CATEGORY_STATIC(UIManager, Log, All);
 void UUIManager::Init()
 {
 	Super::Init();
-
-	ULuaManager *LuaManager = Cast<ULuaManager>(GameInstance->GetManager(ULuaManager::StaticClass()));
-	if (LuaManager)
-	{
-		LuaManager->GetState()->call("C_UIManager_Init", this);
-	}
 
 	UE_LOG(UIManager, Log, TEXT("Init"));
 }
@@ -172,10 +165,10 @@ UBaseWidget* UUIManager::GetWidget(FName Name)
 		Widget->SetInfo(WidgetRow);
 	}
 
-	ULuaManager *LuaManager = Cast<ULuaManager>(GameInstance->GetManager(ULuaManager::StaticClass()));
+	ULuaManager *LuaManager = GameInstance->GetLuaManager();
 	if (LuaManager)
 	{
-		LuaManager->GetState()->call("C_UIManager_CreateWidget", Widget);
+		LuaManager->Mapped(Widget);
 	}
 
 	return Widget;

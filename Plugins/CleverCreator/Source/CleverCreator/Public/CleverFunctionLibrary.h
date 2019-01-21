@@ -7,6 +7,7 @@
 #include "CleverFunctionLibrary.generated.h"
 
 class UCleverInstance;
+class ULuaManager;
 class USceneManager;
 class UUIManager;
 
@@ -22,6 +23,9 @@ public:
 
 	UFUNCTION(BlueprintPure, meta = (WorldContext = "WorldContextObject"))
 		static UCleverInstance* GetCleverInstance(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintPure, meta = (WorldContext = "WorldContextObject"))
+		static ULuaManager* GetLuaManager(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintPure, meta = (WorldContext = "WorldContextObject"))
 		static USceneManager* GetSceneManager(const UObject* WorldContextObject);

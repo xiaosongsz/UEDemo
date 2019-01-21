@@ -3,10 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CleverInstance.h"
 #include "BaseManager.generated.h"
-
-class UCleverInstance;
-
 /**
  * 
  */

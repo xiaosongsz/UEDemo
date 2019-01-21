@@ -18,4 +18,8 @@ public:
 
 	virtual void Shutdown() override;
 
+protected:
+
+	UFUNCTION(BlueprintCallable)
+	virtual void BeginPlay();
 };
