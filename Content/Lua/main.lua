@@ -1,6 +1,3 @@
---CleverCreator
-require("CleverCreator/CleverCreator")
+require('CleverCreator/CleverCreator')
 
-print('Hello sLua')
-
-print("----------------------------------------")
+print('--------------------------------------------------')
