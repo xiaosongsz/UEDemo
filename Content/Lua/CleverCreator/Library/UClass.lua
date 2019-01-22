@@ -29,10 +29,6 @@ function UClass:ctor(uObject)
     end
 
     setmetatable(self, {__index = _index})
-
-    self:init()
 end
-
-function UClass:init() end
 
 return UClass

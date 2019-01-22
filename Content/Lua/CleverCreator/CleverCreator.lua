@@ -9,16 +9,19 @@ require('CleverCreator/Library/UClass')
 CleverCreator = {}
 
 local CleverInstance_C = require('CleverCreator/Core/CleverInstance')
+local SceneManager_C = require('CleverCreator/Scene/SceneManager')
 local UIManager_C = require('CleverCreator/UI/UIManager')
 
 ---@param instance userdata
 function CleverCreator_Init(instance)
 
+    ---@class 单例
     local Instance = CleverInstance_C(instance)
     CleverCreator.Instance = Instance
 
+    ---@class 场景管理
+    SceneManager = SceneManager_C(Instance:GetSceneManager())
+
     ---@class UI管理
     UIManager = UIManager_C(Instance:GetUIManager())
-
-    UIManager:OpenGroup('Loading')
 end
