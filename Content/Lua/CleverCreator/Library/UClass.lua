@@ -10,22 +10,29 @@ local UClass = class('UClass')
 function UClass:ctor(uObject)
     self._userdata = uObject
 
+    local mTable = getmetatable(self)
+    local mIndex = mTable.__index
+
+    local uTable = getmetatable(uObject)
+    local uIndex = uTable.__index
+
     local _index = function(_, _key)
-        local uTable = getmetatable(_._userdata)
-        local uIndex = uTable.__index
-        local func = uIndex(_._userdata, _key)
+        if mIndex[_key] then
+            return mIndex[_key]
+        end
+        local func = uIndex(uObject, _key)
         if func then
             return function(_, ...)
-                return func(_._userdata, ...)
+                return func(uObject, ...)
             end
         end
     end
 
     setmetatable(self, {__index = _index})
+
+    self:init()
 end
 
-function UClass:init()
-
-end
+function UClass:init() end
 
 return UClass
