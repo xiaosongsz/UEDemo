@@ -4,8 +4,15 @@
 --- DateTime: 2019/1/22 15:11
 ---
 
+---@class BaseWidget
 local BaseWidget = class('BaseWidget', 'UClass')
 
+function BaseWidget:construct() end
 
+function BaseWidget:destruct() end
+
+function BaseWidget:onOpen() end
+
+function BaseWidget:onClose() end
 
 return BaseWidget

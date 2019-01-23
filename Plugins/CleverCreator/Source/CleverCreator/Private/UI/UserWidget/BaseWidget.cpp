@@ -3,6 +3,7 @@
 #include "BaseWidget.h"
 #include "Blueprint/WidgetTree.h"
 #include "UI/UIManager.h"
+#include "Lua/LuaManager.h"
 #include "CleverFunctionLibrary.h"
 
 DEFINE_LOG_CATEGORY_STATIC(BaseWidget, Log, All);
@@ -95,12 +96,24 @@ void UBaseWidget::NativeConstruct()
 {
 	State = EWidgetState::Construct;
 
+	ULuaManager *LuaManager = UCleverFunctionLibrary::GetLuaManager(GetWorld());
+	if (LuaManager)
+	{
+		LuaManager->GetState()->call("BaseWidget_Construct", this, this->GetName());
+	}
+
 	UE_LOG(BaseWidget, Log, TEXT("NativeConstruct"));
 }
 
 void UBaseWidget::NativeDestruct()
 {
 	State = EWidgetState::Destruct;
+
+	ULuaManager *LuaManager = UCleverFunctionLibrary::GetLuaManager(GetWorld());
+	if (LuaManager)
+	{
+		LuaManager->GetState()->call("BaseWidget_Destruct", this->GetName());
+	}
 
 	UE_LOG(BaseWidget, Log, TEXT("NativeDestruct"));
 }
@@ -111,6 +124,12 @@ void UBaseWidget::NativeOpen(const FString &Param)
 
 	OnOpen(Param);
 
+	ULuaManager *LuaManager = UCleverFunctionLibrary::GetLuaManager(GetWorld());
+	if (LuaManager)
+	{
+		LuaManager->GetState()->call("BaseWidget_Open", this->GetName(), Param);
+	}
+
 	UE_LOG(BaseWidget, Log, TEXT("NativeOpen"));
 }
 
@@ -119,6 +138,12 @@ void UBaseWidget::NativeClose(const FString &Param)
 	State = EWidgetState::Close;
 
 	OnClose(Param);
+
+	ULuaManager *LuaManager = UCleverFunctionLibrary::GetLuaManager(GetWorld());
+	if (LuaManager)
+	{
+		LuaManager->GetState()->call("BaseWidget_Close", this->GetName(), Param);
+	}
 
 	UE_LOG(BaseWidget, Log, TEXT("NativeClose"));
 }

@@ -3,8 +3,11 @@
 --- Created by Song.
 --- DateTime: 2019/1/22 10:05
 ---
+require('CleverCreator/Library/Global')
 require('CleverCreator/Library/Class')
 require('CleverCreator/Library/UClass')
+
+require('CleverCreator/UI/BaseWidget')
 
 CleverCreator = {}
 
@@ -15,13 +18,15 @@ local UIManager_C = require('CleverCreator/UI/UIManager')
 ---@param instance userdata
 function CleverCreator_Init(instance)
 
-    ---@class 单例
+    ---@class CleverCreator
     local Instance = CleverInstance_C(instance)
     CleverCreator.Instance = Instance
 
-    ---@class 场景管理
+    ---@class SceneManager
     SceneManager = SceneManager_C(Instance:GetSceneManager())
 
-    ---@class UI管理
+    ---@class UIManager
     UIManager = UIManager_C(Instance:GetUIManager())
+
+    UIManager:OpenGroup('Loading')
 end

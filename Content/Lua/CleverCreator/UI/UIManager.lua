@@ -4,6 +4,77 @@
 --- DateTime: 2019/1/22 11:43
 ---
 
+
+---@type table<userdata, BaseWidget>
+local UIs = {}
+
+CleverCreator.UIs = UIs
+
+function BaseWidget_Construct(baseWidget, name)
+    --print('BaseWidget_Construct', baseWidget)
+
+    local ui = UIs[name]
+    if ui then
+        error('Has BaseWidget:'..name)
+        return
+    end
+
+    local className = string.split(name, '_')[1]
+    local uClass = Classes[className]
+    if not uClass then
+        error('Not found class:'..className)
+        return
+    end
+
+    ---@type BaseWidget
+    local widget = uClass(baseWidget)
+    widget:construct()
+
+    UIs[name] = widget
+end
+
+function BaseWidget_Destruct(name)
+    --print('BaseWidget_Destruct', baseWidget)
+
+    local ui = UIs[name]
+    if not ui then
+        error('Not Has BaseWidget:'..name)
+    end
+
+    ---@type BaseWidget
+    local widget = ui
+    widget:destruct()
+
+    UIs[name] = nil
+
+end
+
+function BaseWidget_Open(name, param)
+    --print('BaseWidget_Open', baseWidget, param)
+
+    local ui = UIs[name]
+    if not ui then
+        error('Not Has BaseWidget:'..name)
+    end
+
+    ---@type BaseWidget
+    local widget = ui
+    widget:onOpen(param)
+end
+
+function BaseWidget_Close(name, param)
+    --print('BaseWidget_Close', baseWidget, param)
+
+    local ui = UIs[name]
+    if not ui then
+        error('Not Has BaseWidget:'..name)
+    end
+
+    ---@type BaseWidget
+    local widget = ui
+    widget:onClose(param)
+end
+
 local UIManager = class('UIManager', 'UClass')
 
 return UIManager
