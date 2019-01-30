@@ -1,0 +1,3 @@
+[submodule "Plugins/GFrame"]
+	path = Plugins/GFrame
+	url = git@github.com:xiaosongsz/GFrame.git
